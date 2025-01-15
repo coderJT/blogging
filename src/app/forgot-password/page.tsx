@@ -1,6 +1,20 @@
 "use client"
 
 import { forgotPassword } from "./actions";
+import { useFormStatus } from 'react-dom';
+
+function SubmitButton() {
+    const { pending } = useFormStatus();
+    
+    return (
+        <button 
+            className="bg-green-700 rounded-md px-4 py-2 text-foreground mb-2 disabled:opacity-50"
+            disabled={pending}
+        >
+            {pending ? 'Sending...' : 'Send Reset Instructions'}
+        </button>
+    );
+}
 
 export default function ForgotPasswordPage() {
     return (
@@ -19,9 +33,7 @@ export default function ForgotPasswordPage() {
                     required
                 />
 
-                <button className="bg-green-700 rounded-md px-4 py-2 text-foreground mb-2">
-                    Send Reset Instructions
-                </button>
+                <SubmitButton />
             </form>
         </div>
     );
