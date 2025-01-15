@@ -22,7 +22,7 @@ export async function login(formData: FormData) {
     }
 
     revalidatePath('/', 'layout'); // reflect changes caused by user login on layout-level
-    redirect('/');
+    redirect('/private');
 }
 
 export async function signup(formData: FormData) {
