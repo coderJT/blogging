@@ -50,6 +50,7 @@ export async function updateSession(request: NextRequest) {
     if ( 
         !user && // Check if there is no authenticated user
         !request.nextUrl.pathname.startsWith('/login') && // Allow access to the login page
+        !request.nextUrl.pathname.startsWith('/forgot-password') && // Allow access to the login page
         !request.nextUrl.pathname.startsWith('/auth') // Allow access to auth-related pages
     ) {
         // Cloning is required to preserve other parts of the URL (if needed)

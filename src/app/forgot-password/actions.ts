@@ -1,4 +1,5 @@
-import { headers } from "next/headers";
+"use server";
+
 import { createClient } from "utils/supabase/server";
 import { redirect } from "next/navigation";
 
@@ -7,27 +8,21 @@ export const forgotPassword = async (formData: FormData) => {
     // Required Zod validation
     const email = formData.get("email")?.toString();
     const supabase = await createClient();
-    const origin = (await headers()).get("origin");
-    const callbackUrl = formData.get("callbackUrl")?.toString();
 
     if (!email) {
         redirect("/error");
     }
 
-    const { error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: `${origin}/auth/callback?redirect_to=/private/reset-password`,
-    });
+    const { error } = await supabase.auth.resetPasswordForEmail(email);
+
+    console.log(error);
 
     if (error) {
+        console.error("Password reset error:", error);
         redirect("/error");
     }
 
-    if (callbackUrl) {
-        redirect(callbackUrl);
-    }
-
-    // Redirect to proper message
-    redirect("/login")
+    redirect("/check-email");
 }
 
 export const resetPassword = async (formData: FormData) => {
