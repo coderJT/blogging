@@ -26,6 +26,7 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { Skeleton } from "@/components/ui/skeleton";
 
 type BlogPost = {
     id: string;
@@ -37,6 +38,62 @@ type BlogPost = {
     viewCount: number;
 };
 
+function ProfileSkeleton() {
+    return (
+        <div className="container max-w-5xl py-10">
+            <div className="grid gap-8">
+                <Card>
+                    <CardHeader>
+                        <Skeleton className="h-8 w-[200px]" />
+                    </CardHeader>
+                    <CardContent>
+                        <div className="space-y-4">
+                            <div>
+                                <Skeleton className="h-4 w-[100px] mb-2" />
+                                <Skeleton className="h-6 w-[200px]" />
+                            </div>
+                            <div>
+                                <Skeleton className="h-4 w-[120px] mb-2" />
+                                <Skeleton className="h-6 w-[150px]" />
+                            </div>
+                            <div className="pt-4">
+                                <Skeleton className="h-10 w-[150px]" />
+                            </div>
+                        </div>
+                    </CardContent>
+                </Card>
+
+                <Card>
+                    <CardHeader className="flex flex-row items-center justify-between">
+                        <Skeleton className="h-8 w-[150px]" />
+                        <Skeleton className="h-10 w-[140px]" />
+                    </CardHeader>
+                    <CardContent>
+                        <div className="space-y-4">
+                            {[...Array(3)].map((_, i) => (
+                                <div key={i} className="flex items-center justify-between py-4">
+                                    <div className="space-y-2">
+                                        <Skeleton className="h-5 w-[300px]" />
+                                        <div className="flex gap-4">
+                                            <Skeleton className="h-4 w-[100px]" />
+                                            <Skeleton className="h-4 w-[80px]" />
+                                        </div>
+                                    </div>
+                                    <div className="flex gap-2">
+                                        <Skeleton className="h-9 w-[60px]" />
+                                        <Skeleton className="h-9 w-[60px]" />
+                                        <Skeleton className="h-9 w-[70px]" />
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </CardContent>
+                </Card>
+            </div>
+        </div>
+    );
+}
+
 export default function ProfilePage() {
     const [user, setUser] = useState<any>(null);
     const [posts, setPosts] = useState<BlogPost[]>([]);
@@ -47,6 +104,7 @@ export default function ProfilePage() {
 
     useEffect(() => {
         async function getProfile() {
+            setIsLoading(true);
             try {
                 const { data: { user }, error: authError } = await supabase.auth.getUser();
                 if (!user || authError) {
@@ -96,7 +154,7 @@ export default function ProfilePage() {
     };
 
     if (isLoading) {
-        return <div>Loading...</div>;
+        return <ProfileSkeleton />;
     }
 
     return (
