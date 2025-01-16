@@ -9,12 +9,14 @@ async function main() {
 
     // Create 10 fake blog posts
     const posts = Array.from({ length: 10 }).map(() => ({
+        id: faker.string.uuid(),
         title: faker.lorem.sentence(),
         content: faker.lorem.paragraphs(3),
         published: faker.datatype.boolean(),
         authorId: faker.string.uuid(), // assuming you have user authentication
         createdAt: faker.date.past(),
         updatedAt: faker.date.recent(),
+        viewCount: faker.number.int({ min: 0, max: 1000 }),
     }));
 
     for (const post of posts) {

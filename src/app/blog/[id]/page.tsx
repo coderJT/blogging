@@ -1,6 +1,6 @@
 "use client";
 
-import { getBlogPost } from "./actions";
+import { getBlogPost, incrementBlogPostViews } from "./actions";
 import { notFound } from "next/navigation";
 import { formatDate } from "@/lib/utils";
 import { use } from "react";
@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Eye } from "lucide-react";
-import { Post } from "@/types/blog";
+import { BlogPost } from "@/types/blog";
 
 export default function BlogPostPage({
     params,
@@ -17,7 +17,7 @@ export default function BlogPostPage({
     params: Promise<{ id: string }>;
 }) {
     const { id } = use(params);
-    const [post, setPost] = useState<Post | null>(null);
+    const [post, setPost] = useState<BlogPost | null>(null);
     const [isOwner, setIsOwner] = useState(false);
     const [viewCount, setViewCount] = useState(0);
     const supabase = createClient();
@@ -30,17 +30,16 @@ export default function BlogPostPage({
                     notFound();
                 }
                 setPost(post);
+                setViewCount(post.views || 0);
 
                 const { data: { user } } = await supabase.auth.getUser();
                 const isOwner = user?.id === post.authorId;
                 setIsOwner(isOwner);
 
-                const viewResponse = await fetch(`/api/posts/${id}/views`);
-                const viewData = await viewResponse.json();
-                setViewCount(viewData.viewCount);
-
+                // Only increment views if not the author
                 if (user?.id !== post.authorId) {
-                    await fetch(`/api/posts/${id}/views`, { method: 'POST' });
+                    const newViewCount = await incrementBlogPostViews(id);
+                    setViewCount(newViewCount);
                 }
             } catch (error) {
                 console.error('Error loading post:', error);

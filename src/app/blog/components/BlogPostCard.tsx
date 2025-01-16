@@ -1,9 +1,9 @@
 "use client";
 
 import Link from 'next/link';
-import { Post } from '@/types/blog';
+import { BlogPost } from '@/types/blog';
 
-export default function BlogPostCard({ post }: { post: Post }) {
+export default function BlogPostCard({ post }: { post: BlogPost }) {
     const formattedDate = new Date(post.createdAt).toLocaleDateString('en-US', {
         year: 'numeric',
         month: 'long',

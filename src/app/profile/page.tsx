@@ -28,16 +28,8 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Skeleton } from "@/components/ui/skeleton";
 import { User } from '@supabase/supabase-js';
-
-type BlogPost = {
-    id: string;
-    title: string;
-    content: string;
-    published: boolean;
-    createdAt: string;
-    updatedAt: string;
-    viewCount: number;
-};
+import { BlogPost } from "@/types/blog";
+import { getUserPosts } from "../blog/[id]/actions";
 
 function ProfileSkeleton() {
     return (
@@ -114,17 +106,9 @@ export default function ProfilePage() {
                 }
                 setUser(user);
 
-                const response = await fetch('/api/posts/user', {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                });
-                
-                if (response.ok) {
-                    const data = await response.json();
-                    setPosts(data);
-                }
+                const userId = user.id;
+                const userPosts = await getUserPosts(userId);
+                setPosts(userPosts);
             } catch (error) {
                 console.error('Error fetching profile:', error);
             } finally {

@@ -5,9 +5,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 export async function GET() {
-
-    const supabase = await createClient()
-
+    const supabase = await createClient();
     const { 
         data: { user },
     } = await supabase.auth.getUser();
@@ -15,7 +13,6 @@ export async function GET() {
     if (user) {
         await supabase.auth.signOut();
     }
-
-    revalidatePath('/', 'layout')
+    revalidatePath('/login', 'layout');
     redirect('/login');
 }
