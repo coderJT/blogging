@@ -53,6 +53,7 @@ export async function updateSession(request: NextRequest) {
         !request.nextUrl.pathname.startsWith('/forgot-password') && // Allow access to the forgot password page
         !request.nextUrl.pathname.startsWith('/check-email') && // Allow access to the check email page
         !request.nextUrl.pathname.startsWith('/reset-password') && // Allow access to reset password page
+        !request.nextUrl.pathname.startsWith('/blog') && // Allow access to blog page
         !request.nextUrl.pathname.startsWith('/auth') // Allow access to auth-related pages
     ) {
         // Cloning is required to preserve other parts of the URL (if needed)

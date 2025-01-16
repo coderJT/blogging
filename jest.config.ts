@@ -12,8 +12,8 @@ const createJestConfig = nextJest({
 })
 
 const config: Config = {
-    testEnvironment: 'jest-environment-jsdom',
     setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
+    testEnvironment: 'jest-environment-jsdom',
     transform: {
         '^.+\\.(t|j)sx?$': '@swc/jest',
     },
