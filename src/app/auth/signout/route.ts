@@ -11,7 +11,7 @@ export async function GET() {
     } = await supabase.auth.getUser();
 
     if (user) {
-        await supabase.auth.signOut();
+        await supabase.auth.signOut({scope: 'local'});
     }
     revalidatePath('/login', 'layout');
     redirect('/login');
