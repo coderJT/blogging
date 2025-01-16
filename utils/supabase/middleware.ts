@@ -54,7 +54,8 @@ export async function updateSession(request: NextRequest) {
         !request.nextUrl.pathname.startsWith('/check-email') && // Allow access to the check email page
         !request.nextUrl.pathname.startsWith('/reset-password') && // Allow access to reset password page
         !request.nextUrl.pathname.startsWith('/blog') && // Allow access to blog page
-        !request.nextUrl.pathname.startsWith('/auth') // Allow access to auth-related pages
+        !request.nextUrl.pathname.startsWith('/auth') &&// Allow access to auth-related pages
+        !request.nextUrl.pathname.startsWith('/error') // Allow access to error page
     ) {
         // Cloning is required to preserve other parts of the URL (if needed)
         const url = request.nextUrl.clone() 

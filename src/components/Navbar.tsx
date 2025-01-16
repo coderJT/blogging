@@ -32,7 +32,7 @@ export default async function Navbar() {
                         {user ? (
                             <>
                                 <NavigationMenuItem>
-                                    <Link href="/blog/new" legacyBehavior passHref>
+                                    <Link href="/profile/create" legacyBehavior passHref>
                                         <NavigationMenuLink className="px-4 py-2">
                                             New Post
                                         </NavigationMenuLink>

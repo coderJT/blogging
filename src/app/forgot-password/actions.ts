@@ -11,9 +11,11 @@ export const forgotPassword = async (formData: FormData) => {
 
     if (!email) {
         redirect("/error");
-    }
+    }   
 
-    const { error } = await supabase.auth.resetPasswordForEmail(email);
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/reset-password`
+    });
 
     console.log(error);
 
@@ -30,25 +32,32 @@ export const resetPassword = async (formData: FormData) => {
     const supabase = await createClient();
 
     // Zod validation
-    const password = formData.get("password") as string;
-    const confirmPassword = formData.get("confirmPassword") as string;
+    try {
+        const password = formData.get("password") as string;
+        const confirmPassword = formData.get("confirmPassword") as string;
 
-    if (!password || !confirmPassword) {
+        if (!password || !confirmPassword) {
+            console.error("Password or confirm password is missing");
+            redirect("/error");
+        }
+
+        if (password !== confirmPassword) {
+            console.error("Passwords do not match");
+            redirect("/error");
+        }
+
+        const { error } = await supabase.auth.updateUser({
+            password: password,
+        })
+
+        if (error) {
+            console.error("Error updating password:", error);
+            redirect("/error");
+        }
+    } catch (error) {
+        console.error("Password reset error:", error);
         redirect("/error");
     }
-
-    if (password !== confirmPassword) {
-        redirect("/error");
-    }
-
-    const { error } = await supabase.auth.updateUser({
-        password: password,
-    })
-
-    if (error) {
-        redirect("/error");
-    }
-
 
     redirect("/login");
 }
