@@ -1,13 +1,14 @@
 import { prisma } from "@/lib/prisma";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(
-    request: Request,
-    { params }: { params: { id: string } }
+    request: NextRequest,
 ) {
     try {
+        const searchParams = request.nextUrl.searchParams;
+        const id = searchParams.get('id') ?? undefined;
         const post = await prisma.blogPost.update({
-            where: { id: params.id },
+            where: { id: id },
             data: {
                 viewCount: {
                     increment: 1
@@ -23,12 +24,13 @@ export async function POST(
 }
 
 export async function GET(
-    request: Request,
-    { params }: { params: { id: string } }
+    request: NextRequest,
 ) {
+    const searchParams = request.nextUrl.searchParams;
+    const id = searchParams.get('id') ?? undefined;
     try {
         const post = await prisma.blogPost.findUnique({
-            where: { id: params.id },
+            where: { id: id },
             select: { viewCount: true }
         });
 
