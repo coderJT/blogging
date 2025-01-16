@@ -1,23 +1,31 @@
 "use server";
 
-import { PrismaClient } from "@prisma/client";
+import { prisma } from '@/lib/prisma';
 import { cache } from "react";
-
-const prisma = new PrismaClient();
+import { notFound } from "next/navigation";
 
 export const getBlogPost = cache(async (id: string) => {
-    const post = await prisma.blogPost.findUnique({
-        where: { id },
-        select: {
-            id: true,
-            title: true,
-            content: true,
-            createdAt: true,
-            updatedAt: true,
-            published: true,
-            authorId: true,
-        },
-    });
+    try {
+        const post = await prisma.blogPost.findUnique({
+            where: { id },
+            select: {
+                id: true,
+                title: true,
+                content: true,
+                createdAt: true,
+                updatedAt: true,
+                published: true,
+                authorId: true,
+            },
+        });
 
-    return post;
+        if (!post) {
+            return notFound();
+        }
+
+        return post;
+    } catch (error) {
+        console.error('Error fetching blog post:', error);
+        throw new Error('Failed to fetch blog post');
+    }
 }); 

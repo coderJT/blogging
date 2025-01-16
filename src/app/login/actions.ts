@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
+
 import { createClient } from "utils/supabase/server";
 
 export async function login(formData: FormData) {
@@ -22,7 +23,7 @@ export async function login(formData: FormData) {
     }
 
     revalidatePath('/', 'layout'); // reflect changes caused by user login on layout-level
-    redirect('/private');
+    redirect('/');
 }
 
 export async function signup(formData: FormData) {
@@ -38,9 +39,9 @@ export async function signup(formData: FormData) {
     const { error } = await supabase.auth.signUp(data);
 
     if (error) {
-        redirect('/error');
+        return { error: error.message };
     }
 
     revalidatePath('/', 'layout');
-    redirect('/');
+    redirect('/check-email');
 }

@@ -1,6 +1,7 @@
 import { getBlogPost } from "./actions";
-import { notFound } from "next/navigation";
 import { formatDate } from "@/lib/utils";
+import { Suspense } from "react";
+import BlogPostLoading from "./loading";
 
 export default async function BlogPostPage({
     params,
@@ -8,11 +9,16 @@ export default async function BlogPostPage({
     params: Promise<{ id: string }>;
 }) {
     const { id } = await params;
-    const post = await getBlogPost(id);
 
-    if (!post) {
-        notFound();
-    }
+    return (
+        <Suspense fallback={<BlogPostLoading />}>
+            <BlogPostContent id={id} />
+        </Suspense>
+    );
+}
+
+async function BlogPostContent({ id }: { id: string }) {
+    const post = await getBlogPost(id);
 
     return (
         <article className="container mx-auto px-4 py-8 max-w-3xl">
