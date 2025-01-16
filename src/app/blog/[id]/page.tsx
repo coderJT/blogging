@@ -8,6 +8,7 @@ import { createClient } from "utils/supabase/client";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { Eye } from "lucide-react";
 
 export default function BlogPostPage({
     params,
@@ -17,6 +18,8 @@ export default function BlogPostPage({
     const { id } = use(params);
     const [post, setPost] = useState<any>(null);
     const [isOwner, setIsOwner] = useState(false);
+    const [viewCount, setViewCount] = useState(0);
+    const [hasIncremented, setHasIncremented] = useState(false);
     const supabase = createClient();
 
     useEffect(() => {
@@ -28,9 +31,17 @@ export default function BlogPostPage({
                 }
                 setPost(post);
 
-                // Check if current user is the post owner
                 const { data: { user } } = await supabase.auth.getUser();
-                setIsOwner(user?.id === post.authorId);
+                const isOwner = user?.id === post.authorId;
+                setIsOwner(isOwner);
+
+                const viewResponse = await fetch(`/api/posts/${id}/views`);
+                const viewData = await viewResponse.json();
+                setViewCount(viewData.viewCount);
+
+                if (user?.id !== post.authorId) {
+                    await fetch(`/api/posts/${id}/views`, { method: 'POST' });
+                }
             } catch (error) {
                 console.error('Error loading post:', error);
             }
@@ -49,8 +60,13 @@ export default function BlogPostPage({
                 <div className="flex justify-between items-start">
                     <div>
                         <h1 className="text-4xl font-bold mb-4">{post.title}</h1>
-                        <div className="text-gray-500">
-                            {formatDate(post.createdAt)}
+                        <div className="flex items-center gap-4 text-gray-500">
+                            <time>{formatDate(post.createdAt)}</time>
+                            <span>•</span>
+                            <div className="flex items-center gap-1">
+                                <Eye className="h-4 w-4" />
+                                {viewCount} views
+                            </div>
                         </div>
                     </div>
                     {isOwner && (
@@ -63,13 +79,10 @@ export default function BlogPostPage({
                 </div>
             </header>
 
-            <div className="prose prose-lg max-w-none">
-                {post.content.split('\n').map((paragraph: string, index: number) => (
-                    <p key={index} className="mb-4">
-                        {paragraph}
-                    </p>
-                ))}
-            </div>
+            <div 
+                className="prose prose-lg max-w-none dark:prose-invert"
+                dangerouslySetInnerHTML={{ __html: post.content }}
+            />
         </article>
     );
 }

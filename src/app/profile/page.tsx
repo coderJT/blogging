@@ -34,6 +34,7 @@ type BlogPost = {
     published: boolean;
     createdAt: string;
     updatedAt: string;
+    viewCount: number;
 };
 
 export default function ProfilePage() {
@@ -47,7 +48,6 @@ export default function ProfilePage() {
     useEffect(() => {
         async function getProfile() {
             try {
-                // Check auth status
                 const { data: { user }, error: authError } = await supabase.auth.getUser();
                 if (!user || authError) {
                     router.push('/login');
@@ -55,7 +55,6 @@ export default function ProfilePage() {
                 }
                 setUser(user);
 
-                // Fetch user's posts
                 const response = await fetch('/api/posts/user', {
                     method: 'GET',
                     headers: {
@@ -85,7 +84,6 @@ export default function ProfilePage() {
             });
 
             if (response.ok) {
-                // Update the posts list after successful deletion
                 setPosts(posts.filter(post => post.id !== postId));
             } else {
                 console.error('Failed to delete post');
@@ -104,7 +102,6 @@ export default function ProfilePage() {
     return (
         <div className="container max-w-5xl py-10">
             <div className="grid gap-8">
-                {/* User Info Section */}
                 <Card>
                     <CardHeader>
                         <CardTitle>Profile Settings</CardTitle>
@@ -130,7 +127,6 @@ export default function ProfilePage() {
                     </CardContent>
                 </Card>
 
-                {/* Posts Section */}
                 <Card>
                     <CardHeader className="flex flex-row items-center justify-between">
                         <CardTitle>Your Posts</CardTitle>
@@ -148,6 +144,7 @@ export default function ProfilePage() {
                                     <TableHead>Status</TableHead>
                                     <TableHead>Created</TableHead>
                                     <TableHead>Updated</TableHead>
+                                    <TableHead>Views</TableHead>
                                     <TableHead className="text-right">Actions</TableHead>
                                 </TableRow>
                             </TableHeader>
@@ -166,6 +163,7 @@ export default function ProfilePage() {
                                         </TableCell>
                                         <TableCell>{formatDate(post.createdAt)}</TableCell>
                                         <TableCell>{formatDate(post.updatedAt)}</TableCell>
+                                        <TableCell>{post.viewCount}</TableCell>
                                         <TableCell className="text-right space-x-2">
                                             <Button variant="outline" size="sm" asChild>
                                                 <Link href={`/blog/${post.id}`}>

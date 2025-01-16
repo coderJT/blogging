@@ -46,7 +46,11 @@ export default async function Navbar() {
                                     </Link>
                                 </NavigationMenuItem>
                                 <NavigationMenuItem>
-                                    <LogoutButton />
+                                    <Link href="/auth/signout" legacyBehavior passHref>
+                                        <NavigationMenuLink className="px-4 py-2">
+                                            Logout
+                                        </NavigationMenuLink>
+                                    </Link>
                                 </NavigationMenuItem>
                             </>
                         ) : (

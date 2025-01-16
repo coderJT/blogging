@@ -19,7 +19,8 @@ export async function getBlogPosts() {
                 createdAt: true,
                 updatedAt: true,
                 published: true,
-                authorId: true
+                authorId: true,
+                viewCount: true
             }
         });
 

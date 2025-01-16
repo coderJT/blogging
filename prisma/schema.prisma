@@ -22,4 +22,5 @@ model BlogPost {
   updatedAt DateTime @updatedAt
   published Boolean  @default(false)
   authorId  String
+  viewCount Int      @default(0)
 }

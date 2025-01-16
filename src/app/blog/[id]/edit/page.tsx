@@ -7,11 +7,11 @@ import { updateBlogPost } from './actions';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { createClient } from 'utils/supabase/client';
 import { use } from 'react';
+import Editor from '@/components/Editor';
 
 export default function EditPage({
     params,
@@ -123,33 +123,31 @@ export default function EditPage({
     }
 
     return (
-        <div className="container max-w-2xl py-10">
+        <div className="container max-w-4xl py-10">
             <Card>
                 <CardHeader>
                     <CardTitle>Edit Post</CardTitle>
                 </CardHeader>
                 <CardContent>
-                    <form onSubmit={handleSubmit} className="space-y-4">
+                    <form onSubmit={handleSubmit} className="space-y-8">
                         <div className="space-y-2">
                             <Label htmlFor="title">Title</Label>
                             <Input
                                 id="title"
                                 value={title}
                                 onChange={(e) => setTitle(e.target.value)}
-                                placeholder="Enter post title"
+                                placeholder="Enter your post title"
                                 disabled={isSubmitting}
+                                required
                             />
                         </div>
 
                         <div className="space-y-2">
                             <Label htmlFor="content">Content</Label>
-                            <Textarea
-                                id="content"
+                            <Editor
                                 value={content}
-                                onChange={(e) => setContent(e.target.value)}
-                                placeholder="Write your post content"
-                                className="min-h-[200px]"
-                                disabled={isSubmitting}
+                                onChange={setContent}
+                                placeholder="Write your post content here..."
                             />
                         </div>
 

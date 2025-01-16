@@ -6,9 +6,9 @@ import { createBlogPost } from './actions';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
+import Editor from '@/components/Editor';
 
 export default function CreatePage() {
     const [title, setTitle] = useState('');
@@ -25,53 +25,51 @@ export default function CreatePage() {
         setError('');
 
         try {
-            if (!title.trim() || !content.trim()) {
-                setError('Please fill in all required fields');
-                return;
-            }
-
-            const result = await createBlogPost(title, content, published);
+            const result = await createBlogPost(
+                title,
+                content,
+                published
+            );
 
             if (result?.error) {
                 setError(result.error);
-            } else {
-                router.push('/profile');
+                return;
             }
+
+            router.push('/profile');
         } catch (error) {
-            setError('An error occurred while creating the post');
+            setError('Failed to create post');
         } finally {
             setIsSubmitting(false);
         }
     };
 
     return (
-        <div className="container max-w-2xl py-10">
+        <div className="container max-w-4xl py-10">
             <Card>
                 <CardHeader>
                     <CardTitle>Create New Post</CardTitle>
                 </CardHeader>
                 <CardContent>
-                    <form onSubmit={handleSubmit} className="space-y-4">
+                    <form onSubmit={handleSubmit} className="space-y-8">
                         <div className="space-y-2">
                             <Label htmlFor="title">Title</Label>
                             <Input
                                 id="title"
                                 value={title}
                                 onChange={(e) => setTitle(e.target.value)}
-                                placeholder="Enter post title"
+                                placeholder="Enter your post title"
                                 disabled={isSubmitting}
+                                required
                             />
                         </div>
 
                         <div className="space-y-2">
                             <Label htmlFor="content">Content</Label>
-                            <Textarea
-                                id="content"
+                            <Editor
                                 value={content}
-                                onChange={(e) => setContent(e.target.value)}
-                                placeholder="Write your post content"
-                                className="min-h-[200px]"
-                                disabled={isSubmitting}
+                                onChange={setContent}
+                                placeholder="Write your post content here..."
                             />
                         </div>
 
@@ -82,15 +80,15 @@ export default function CreatePage() {
                                 onCheckedChange={setPublished}
                                 disabled={isSubmitting}
                             />
-                            <Label htmlFor="published">Publish immediately</Label>
+                            <Label htmlFor="published">Published</Label>
                         </div>
 
                         {error && (
                             <p className="text-sm text-red-500">{error}</p>
                         )}
 
-                        <Button 
-                            type="submit" 
+                        <Button
+                            type="submit"
                             disabled={isSubmitting}
                             className="w-full"
                         >
