@@ -173,7 +173,7 @@ export default function ProfilePage() {
                             </div>
                             <div>
                                 <label className="text-sm font-medium">Member Since</label>
-                                <p className="text-lg">{formatDate(user?.created_at)}</p>
+                                <p className="text-lg">{formatDate(new Date(user?.created_at ?? ''))}</p>
                             </div>
                             <div className="pt-4">
                                 <Button variant="outline" asChild>
@@ -220,8 +220,8 @@ export default function ProfilePage() {
                                                 {post.published ? 'Published' : 'Draft'}
                                             </span>
                                         </TableCell>
-                                        <TableCell>{formatDate(post.createdAt)}</TableCell>
-                                        <TableCell>{formatDate(post.updatedAt)}</TableCell>
+                                        <TableCell>{formatDate(new Date(post.createdAt))}</TableCell>
+                                        <TableCell>{formatDate(new Date(post.updatedAt))}</TableCell>
                                         <TableCell>{post.viewCount}</TableCell>
                                         <TableCell className="text-right space-x-2">
                                             <Button variant="outline" size="sm" asChild>

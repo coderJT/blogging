@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
-import Editor from '@/components/Editor';
+import DynamicEditor from '@/components/DynamicEditor';
 
 export default function CreatePage() {
     const [title, setTitle] = useState('');
@@ -67,7 +67,7 @@ export default function CreatePage() {
 
                         <div className="space-y-2">
                             <Label htmlFor="content">Content</Label>
-                            <Editor
+                            <DynamicEditor
                                 value={content}
                                 onChange={setContent}
                                 placeholder="Write your post content here..."

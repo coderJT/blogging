@@ -5,14 +5,7 @@ import { getBlogPosts } from "./actions";
 import BlogPostCard from "./components/BlogPostCard";
 import { BlogFilters } from "@/components/BlogFilters";
 import { Skeleton } from "@/components/ui/skeleton";
-
-type BlogPost = {
-    id: string;
-    title: string;
-    content: string;
-    createdAt: string;
-    viewCount: number;
-};
+import { Post } from "@/types/blog";
 
 function BlogSkeleton() {
     return (
@@ -31,8 +24,8 @@ function BlogSkeleton() {
 }
 
 export default function BlogPage() {
-    const [posts, setPosts] = useState<BlogPost[]>([]);
-    const [filteredPosts, setFilteredPosts] = useState<BlogPost[]>([]);
+    const [posts, setPosts] = useState<Post[]>([]);
+    const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState("");
     const [sortBy, setSortBy] = useState("newest");

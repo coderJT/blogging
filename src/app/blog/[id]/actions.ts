@@ -16,6 +16,7 @@ export const getBlogPost = cache(async (id: string) => {
                 updatedAt: true,
                 published: true,
                 authorId: true,
+                viewCount: true,
             },
         });
 

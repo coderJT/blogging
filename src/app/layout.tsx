@@ -37,11 +37,6 @@ export const metadata: Metadata = {
         images: ["/logo.png"],
         creator: "@blog_co"
     },
-    viewport: {
-        width: "device-width",
-        initialScale: 1,
-        maximumScale: 1,
-    },
     robots: {
         index: true,
         follow: true,

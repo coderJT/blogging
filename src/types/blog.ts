@@ -6,4 +6,5 @@ export type Post = {
     updatedAt: Date;
     published: boolean;
     authorId: string;
+    viewCount: number;
 } 

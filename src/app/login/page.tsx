@@ -18,6 +18,14 @@ export default function LoginPage() {
             setError(result.error);
         }
     }
+
+    const handleSignup = async (formData: FormData) => {
+        setError(null);
+        const result = await signup(formData);
+        if (result?.error) {
+            setError(result.error);
+        }
+    }
     
     return (
         <div className="min-h-screen flex items-center justify-center p-4">
@@ -45,7 +53,7 @@ export default function LoginPage() {
 
                         <div className="flex gap-2 mt-6 mb-4">
                             <Button variant="outline" formAction={handleLogin}>Login</Button>
-                            <Button variant="outline" formAction={signup}>Sign up</Button>
+                            <Button variant="outline" formAction={handleSignup}>Sign up</Button>
                         </div>
 
                         <Link href="/forgot-password" className="text-sm underline text-gray-400">Forgot Password</Link>

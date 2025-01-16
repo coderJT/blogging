@@ -11,7 +11,7 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { createClient } from 'utils/supabase/client';
 import { use } from 'react';
-import Editor from '@/components/Editor';
+import DynamicEditor from '@/components/DynamicEditor';
 
 export default function EditPage({
     params,
@@ -146,7 +146,7 @@ export default function EditPage({
 
                         <div className="space-y-2">
                             <Label htmlFor="content">Content</Label>
-                            <Editor
+                            <DynamicEditor
                                 value={content}
                                 onChange={setContent}
                                 placeholder="Write your post content here..."

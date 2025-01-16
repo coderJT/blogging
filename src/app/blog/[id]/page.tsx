@@ -9,7 +9,8 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Eye } from "lucide-react";
-import { Post } from "@/types/post";
+import { Post } from "@/types/blog";
+
 export default function BlogPostPage({
     params,
 }: {
