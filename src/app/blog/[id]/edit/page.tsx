@@ -56,6 +56,7 @@ export default function EditPage({
                 setContent(post.content);
                 setPublished(post.published);
             } catch (error) {
+                console.error(error);
                 setError('Failed to load post');
             } finally {
                 setIsLoading(false);
@@ -88,6 +89,7 @@ export default function EditPage({
                 router.push('/blog');
             }
         } catch (error) {
+            console.error(error);
             setError('An error occurred while updating the post');
         } finally {
             setIsSubmitting(false);
@@ -112,7 +114,7 @@ export default function EditPage({
                 <Card>
                     <CardContent className="p-8 text-center">
                         <h2 className="text-xl font-semibold mb-2">Not Authorized</h2>
-                        <p className="text-gray-500 mb-4">You don't have permission to edit this post.</p>
+                        <p className="text-gray-500 mb-4">You don&apos;t have permission to edit this post.</p>
                         <Button onClick={() => router.push('/profile')} variant="outline">
                             Back to Profile
                         </Button>

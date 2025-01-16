@@ -6,7 +6,6 @@ import {
     NavigationMenuList,
 } from "@/components/ui/navigation-menu";
 import { createClient } from "utils/supabase/server";
-import { LogoutButton } from "./LogoutButton";
 
 export default async function Navbar() {
     const supabase = await createClient();

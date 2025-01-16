@@ -9,17 +9,16 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Eye } from "lucide-react";
-
+import { Post } from "@/types/post";
 export default function BlogPostPage({
     params,
 }: {
     params: Promise<{ id: string }>;
 }) {
     const { id } = use(params);
-    const [post, setPost] = useState<any>(null);
+    const [post, setPost] = useState<Post | null>(null);
     const [isOwner, setIsOwner] = useState(false);
     const [viewCount, setViewCount] = useState(0);
-    const [hasIncremented, setHasIncremented] = useState(false);
     const supabase = createClient();
 
     useEffect(() => {

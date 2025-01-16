@@ -38,6 +38,7 @@ export default function CreatePage() {
 
             router.push('/profile');
         } catch (error) {
+            console.error(error);
             setError('Failed to create post');
         } finally {
             setIsSubmitting(false);
