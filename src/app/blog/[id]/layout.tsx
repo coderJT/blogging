@@ -27,5 +27,5 @@ export default function BlogPostLayout({
 }: {
     children: React.ReactNode;
 }) {
-    return <div className="blog-layout">{children}</div>;
+    return children;
 } 
