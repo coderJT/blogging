@@ -30,7 +30,7 @@ export default function BlogPostPage({
                     notFound();
                 }
                 setPost(post);
-                setViewCount(post.views || 0);
+                setViewCount(post.viewCount || 0);
 
                 const { data: { user } } = await supabase.auth.getUser();
                 const isOwner = user?.id === post.authorId;
