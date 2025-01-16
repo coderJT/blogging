@@ -11,16 +11,31 @@ export async function DELETE(
         const { data: { user } } = await supabase.auth.getUser();
 
         if (!user) {
-            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+            return NextResponse.json(
+                { error: 'Unauthorized' },
+                { status: 401 }
+            );
         }
 
-        // Check if post exists and belongs to user
+        // Get the post to check ownership
         const post = await prisma.blogPost.findUnique({
-            where: { id: params.id }
+            where: { id: params.id },
+            select: { authorId: true }
         });
 
-        if (!post || post.authorId !== user.id) {
-            return NextResponse.json({ error: 'Not authorized' }, { status: 403 });
+        if (!post) {
+            return NextResponse.json(
+                { error: 'Post not found' },
+                { status: 404 }
+            );
+        }
+
+        // Check if the user is the author
+        if (post.authorId !== user.id) {
+            return NextResponse.json(
+                { error: 'Unauthorized' },
+                { status: 403 }
+            );
         }
 
         // Delete the post
@@ -31,6 +46,9 @@ export async function DELETE(
         return NextResponse.json({ success: true });
     } catch (error) {
         console.error('Error deleting post:', error);
-        return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+        return NextResponse.json(
+            { error: 'Internal Server Error' },
+            { status: 500 }
+        );
     }
 } 
