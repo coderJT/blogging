@@ -8,6 +8,7 @@ Blog.co is a modern blogging platform that allows users to create, read, update,
 - [Technologies Used](#technologies-used)
 - [Getting Started](#getting-started)
 - [Usage](#usage)
+- [Email Templates](#email-templates)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -75,6 +76,32 @@ To get a local copy of this project up and running, follow these steps:
 - **Create a Post**: Authenticated users can create new blog posts.
 - **Edit / Delete Posts**: Users can edit or delete their existing posts.
 - **View Posts**: All users can view published posts.
+
+## Email Templates
+
+### Confirm Signup Email
+
+The email template for the "Confirm Signup" email in Supabase is as follows:
+
+```html
+<h2>Confirm your signup</h2>
+<p>Follow this link to confirm your user:</p>
+<p>
+  <a href="{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=email&next={{ .RedirectTo }}">Confirm your email</a>
+</p>
+```
+
+### Reset Password Email
+
+The email template for the "Reset Password" email in Supabase is as follows:
+
+```html
+<h2>Reset Password</h2>
+<p>Follow this link to reset the password for your user:</p>
+<p>
+  <a href="{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=recovery&next=/reset-password">Reset Password</a>
+</p>
+```
 
 ## Contributing
 
