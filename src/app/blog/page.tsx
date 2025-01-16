@@ -1,35 +1,26 @@
-"use client";
+"use server";
 
-import { useEffect, useState } from "react";
-import { getAllPosts } from "./actions";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-export default function BlogPost() {
+import { Suspense } from 'react';
+import BlogPostSkeleton from './components/BlogPostSkeleton';
+import BlogPosts from './components/BlogPosts';
 
-    const [posts, setPosts] = useState<any[]>([]);
-
-    useEffect(() => {
-        async function fetchAllPosts() {
-            const posts = await getAllPosts();
-            setPosts(posts);
-        }
-        fetchAllPosts();
-    }, [])
-    
+export default async function BlogPage() {
     return (
-        <div>
-            <h1>Blog Posts</h1>
-            <div className="flex justify-between items-start">
-                <div>
-                   {posts && posts.map((post: any) => (
-                    <Card key={post.id}>
-                        <CardHeader>
-                            <CardTitle>{post.title}</CardTitle>
-                            <CardDescription>{post.description}</CardDescription>
-                        </CardHeader>
-                    </Card>
-                   ))}
-                </div>
-            </div>
+        <div className="container mx-auto px-4 py-8">
+            <h1 className="text-3xl font-bold mb-8">Blog Posts</h1>
+            <Suspense fallback={<BlogPostsLoading />}>
+                <BlogPosts />
+            </Suspense>
         </div>
-    )
+    );
+}
+
+function BlogPostsLoading() {
+    return (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[...Array(6)].map((_, i) => (
+                <BlogPostSkeleton key={i} />
+            ))}
+        </div>
+    );
 }

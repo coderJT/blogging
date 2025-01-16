@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 
 async function main() {
     // Delete existing records
-    await prisma.blogPost.deleteMany({});
+    // await prisma.blogPost.deleteMany({});
 
     // Create 10 fake blog posts
     const posts = Array.from({ length: 10 }).map(() => ({
