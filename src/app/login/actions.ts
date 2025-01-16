@@ -40,7 +40,7 @@ export async function signup(formData: FormData) {
         email: data.email,
         password: data.password,
         options: {
-            emailRedirectTo: 'http://localhost:3000/blog'
+            emailRedirectTo: `${process.env.NEXT_PUBLIC_URL}/blog`
         }
     });
 
