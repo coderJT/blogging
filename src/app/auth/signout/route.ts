@@ -5,12 +5,26 @@ import { redirect } from "next/navigation";
 
 export async function GET() {
     const supabase = await createClient();
-    const { data: { user } } = await supabase.auth.getUser();
+    
+    console.log("Signout route handler triggered.");
 
-    if (user) {
-        await supabase.auth.signOut();
+    const { data: { user }, error: userError } = await supabase.auth.getUser();
+    if (userError) {
+        console.error("Error fetching user:", userError);
     }
 
-    // Redirect directly to login page
+    if (user) {
+        console.log("User found:", user.email);
+        const { error } = await supabase.auth.signOut();
+        if (error) {
+            console.error("Error during signOut:", error);
+        } else {
+            console.log("User signed out successfully.");
+        }
+    } else {
+        console.log("No user session found.");
+    }
+
+    console.log("Redirecting to /login.");
     return redirect('/login');
 }
