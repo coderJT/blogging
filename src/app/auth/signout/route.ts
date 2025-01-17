@@ -1,18 +1,16 @@
 "use server";
 
 import { createClient } from "utils/supabase/server";
-import { revalidatePath } from "next/cache";    
 import { redirect } from "next/navigation";
 
 export async function GET() {
     const supabase = await createClient();
-    const { 
-        data: { user },
-    } = await supabase.auth.getUser();
+    const { data: { user } } = await supabase.auth.getUser();
 
     if (user) {
-        await supabase.auth.signOut({scope: 'local'});
+        await supabase.auth.signOut();
     }
-    revalidatePath('/login', 'layout');
-    redirect('/login');
+
+    // Redirect directly to login page
+    return redirect('/login');
 }
