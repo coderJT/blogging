@@ -42,6 +42,10 @@ Blog.co is a modern blogging platform that allows users to create, read, update,
 - **Deployment**:
   - Vercel
 
+## Note: Due to email provider limitations, the demo site is available for login only. 
+## Please use the default credentails: (email: admin@gmail.com, password: admin) to log in. 
+
+
 ## Getting Started
 
 To get a local copy of this project up and running, follow these steps:
