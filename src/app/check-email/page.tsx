@@ -5,7 +5,7 @@ export default function CheckEmailPage() {
         <div className="flex-1 flex flex-col w-full px-8 sm:max-w-md justify-center gap-2">
             <h1 className="text-2xl font-bold mb-4">Check Your Email</h1>
             <p>
-                We&apos;ve sent you an email with a link to reset your password. 
+                We&apos;ve sent you an email with a link. 
                 Please check your inbox and follow the instructions.
             </p>
             <p className="text-sm text-gray-500 mt-4">
