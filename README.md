@@ -29,6 +29,9 @@ Blog.co is a modern blogging platform that allows users to create, read, update,
   - Tailwind CSS
 - **Backend**: 
   - Supabase (PostgreSQL, Authentication)
+  - Prisma (ORM)
+- **Deployment**:
+  - Vercel
 
 ## Getting Started
 
