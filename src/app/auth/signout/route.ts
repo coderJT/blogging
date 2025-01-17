@@ -3,7 +3,7 @@
 import { createClient } from "utils/supabase/server";
 import { redirect } from "next/navigation";
 
-export async function GET(request: Request) {
+export async function POST(request: Request) {
     // Log the request details to track who is calling this route
     console.log("Signout route handler triggered.");
     console.log("Request Details:", {
