@@ -1,7 +1,7 @@
 # Blog.co
 
-<img width="1440" alt="Screenshot 2025-01-17 at 1 39 11 PM" src="https://github.com/user-attachments/assets/df029f45-b67b-42b0-9bdb-db6787574f46" />
-<img width="1440" alt="Screenshot 2025-01-17 at 1 39 44 PM" src="https://github.com/user-attachments/assets/14f1c531-89ea-4699-aaa0-566d0540993e" />
+<img width="1440" alt="Screenshot 2025-01-17 at 1 39 10 PM" src="https://github.com/user-attachments/assets/7a6c9304-a233-4d7e-855c-84a25c266290" />
+<img width="1440" alt="Screenshot 2025-01-17 at 1 39 44 PM" src="https://github.com/user-attachments/assets/fd8d51ad-f439-446f-9d09-46de923d51fd" />
 
 
 Blog.co is a modern blogging platform that allows users to create, read, update, and delete blog posts. Built with Next.js and Supabase, this application provides a seamless user experience for both authors and readers.
